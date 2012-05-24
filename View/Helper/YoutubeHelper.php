@@ -34,24 +34,24 @@ class YoutubeHelper extends AppHelper {
     'frameborder' => 0,
   );
 
-/* *
+/**
  * Player Variables
  *  
  * @var array
  * @see https://developers.google.com/youtube/player_parameters
  */ 
   private $_playerVars = array( 
-     'autohide'  => 2, 
-     'autoplay'  => 0, 
-     'controls'  => 1,
-     'enablejsapi'   => 0,
-     'loop'      => 0, 
-     'origin'    => null,
-     'rel'       => 0,
-     'showinfo'  => 0,
-     'start'     => null,
-     'theme'     => 'dark',
-   );
+    'autohide'  => 1, 
+    'autoplay'  => 0, 
+    'controls'  => 1,
+    'enablejsapi'   => 0,
+    'loop'      => 0, 
+    'origin'    => null,
+    'rel'       => 0,
+    'showinfo'  => 0,
+    'start'     => null,
+    'theme'     => 'dark',
+  );
 
 
 /**
