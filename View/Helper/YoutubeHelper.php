@@ -20,7 +20,8 @@ class YoutubeHelper extends AppHelper {
  * @var array
  */
   private $_apis = array( 
-    'player' => 'http://www.youtube.com/embed/' // Youtube Embedded Player
+    'player' => 'http://www.youtube.com/embed/', // Youtube Embedded Player
+    'preview' => 'http://img.youtube.com/vi/' // Youtube Embedded Player
   );
 
 /**
@@ -86,12 +87,41 @@ class YoutubeHelper extends AppHelper {
   public function iframe($url = null, $iframeOpts = array(), $playerVars = array())
   {
     $iframeOpts = array_merge($this->_iframeOpts, $iframeOpts);
+    $iframeOpts['src'] = $this->src($url, $playerVars);
+    return $this->Html->tag('iframe', '', $iframeOpts);
+  }
+
+/**
+ * Get iframe src from URL
+ *
+ * @param string $url Youtube video URL or ID
+ * @param array $playerVars Options for player
+ * @return string Iframe src parameter for embeddingt video
+ * @access public
+ */
+  public function src($url = null, $playerVars = array())
+  {
     $playerVars = array_merge($this->_playerVars, $playerVars);
     $query = http_build_query($this->_playerVars);
-    $src = $this->_apis['player'] . $this->getVideoId($url) . '?' . $query;
-    $iframeOpts['src'] = $src;
-    return $this->Html->tag('iframe', '', $iframeOpts);
-  } 
+    return $this->_apis['player'] . $this->getVideoId($url) . '?' . $query;
+  }
+
+/**
+ * Get preview image for a youtube video
+ * @param string $url Youtube Video URL or ID
+ * @param id $size Youtube predefined sizes (0, 1, 2, 3)
+ * @param array $options Options passed to HtmlHelper::image() function
+ * @return string Ready to use image tag
+ * @access public
+ */
+  public function preview($url = null, $size = 0, $options = array()) {
+    if ($size < 0 && $size > 3) {
+      return '';
+    }
+    $id = $this->getVideoId($url);
+    $src = $this->_apis['preview'] . $id . '/' . $size . '.jpg';
+    return $this->Html->image($src, $options);
+  }
 
 /**
  * Get Video ID from a URL
