@@ -103,7 +103,7 @@ class YoutubeHelper extends AppHelper {
   {
     $playerVars = array_merge($this->_playerVars, $playerVars);
     $query = http_build_query($this->_playerVars);
-    return $this->_apis['player'] . $this->getVideoId($url) . '?' . $query;
+    return htmlentities($this->_apis['player'] . $this->getVideoId($url) . '?' . $query);
   }
 
 /**
